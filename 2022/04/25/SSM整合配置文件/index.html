@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/sakakimd/img/favicon.png">
+    <title>青丝 | 青丝半绾慵倚床</title>
+    
+<link rel="stylesheet" href="/sakakimd/css/reset.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/style.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/fonts.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/sakakimd/">青丝</a>
+    <a class="go-home" href="/sakakimd/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+        <div class="post-main-title">
+            SSM整合配置文件
+        </div>
+        <div class="post-meta">
+            2022-04-25
+        </div>
+    
+
+    <div class="post-md">
+        <p>spring+spring mvc+mybatis的整合只需要三个文件就可以了<br><br>springmvc没有视图相关的配置<br><code>applicationContext.xml</code></p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+    xmlns:tx=&quot;http://www.springframework.org/schema/tx&quot;
+    xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+    xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+    xsi:schemaLocation=&quot;
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;!-- 读取db.properties --&gt;
+    &lt;context:property-placeholder location=&quot;classpath:db.properties&quot; /&gt;
+    &lt;!-- 配置数据源 --&gt;
+    &lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp2.BasicDataSource&quot;&gt;
+        &lt;!-- 数据库驱动 --&gt;
+        &lt;property name=&quot;driverClassName&quot; value=&quot;$&#123;jdbc.driver&#125;&quot; /&gt;
+        &lt;!-- 连接数据库的url --&gt;
+        &lt;property name=&quot;url&quot; value=&quot;$&#123;jdbc.url&#125;&quot; /&gt;
+        &lt;!-- 连接数据库的用户名 --&gt;
+        &lt;property name=&quot;username&quot; value=&quot;$&#123;jdbc.username&#125;&quot; /&gt;
+        &lt;!-- 连接数据库的密码 --&gt;
+        &lt;property name=&quot;password&quot; value=&quot;$&#123;jdbc.password&#125;&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!-- 事务管理器，依赖于数据库 --&gt;
+    &lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;!-- 开启事务注解 --&gt;
+    &lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot; /&gt;
+    &lt;!-- 配置session工厂 --&gt;
+    &lt;bean id=&quot;sqlSessionFactory&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+        &lt;!-- 注入数据源 --&gt;
+        &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!-- Mapper代理开发（基于MapperScannerConfigurer） --&gt;
+    &lt;bean class=&quot;org.mybatis.spring.mapper.MapperScannerConfigurer&quot;&gt;
+        &lt;property name=&quot;basePackage&quot; value=&quot;com.my.ssm.mapper&quot; /&gt;
+    &lt;/bean&gt;
+    &lt;!-- 配置组件扫描器 --&gt;
+    &lt;context:component-scan base-package=&quot;com.my&quot; /&gt;
+    &lt;!-- 开启注解驱动 用于MVC解析JSON等 --&gt;
+    &lt;mvc:annotation-driven /&gt;
+    &lt;!-- 开启静态资源访问 --&gt;
+    &lt;mvc:resources location=&quot;/static/&quot; mapping=&quot;/static/**&quot; /&gt;
+    &lt;!-- 配置拦截器 --&gt;
+    &lt;mvc:interceptors&gt;
+        &lt;mvc:interceptor&gt;
+            &lt;!-- 配置拦截器作用的路径 --&gt;
+            &lt;mvc:mapping path=&quot;/main&quot; /&gt;
+            &lt;!-- 配置不需要拦截作用的路径 --&gt;
+            &lt;!-- &lt;mvc:exclude-mapping path=&quot;&quot; /&gt; --&gt;
+            &lt;bean class=&quot;com.my.ssm.interceptor.LoginInterceptor&quot; /&gt;
+        &lt;/mvc:interceptor&gt;
+    &lt;/mvc:interceptors&gt;
+&lt;/beans&gt;
+</code></pre>
+<p><code>db.properties</code></p>
+<pre><code class="properties">jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://mycent:3306/mybatis?useSSL=false
+jdbc.username=root
+jdbc.password=123456
+</code></pre>
+<p>在<code>web.xml</code>中添加以下内容</p>
+<pre><code class="xml">&lt;servlet&gt;
+    &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;!-- 配置初始化参数，用于读取Spring MVC的配置文件 --&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:applicationContext.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;!-- 应用加载时创建 --&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</code></pre>
+
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 青丝</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/sakakimd/css/a11y-dark.min.css">
+
+
+<script src="/sakakimd/js/highlight.min.js"></script>
+
+
+<script src="/sakakimd/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>

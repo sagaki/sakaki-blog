@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/sakakimd/img/favicon.png">
+    <title>青丝 | 青丝半绾慵倚床</title>
+    
+<link rel="stylesheet" href="/sakakimd/css/reset.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/style.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/fonts.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/sakakimd/">青丝</a>
+    <a class="go-home" href="/sakakimd/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+        <div class="post-main-title">
+            SSH免密
+        </div>
+        <div class="post-meta">
+            2022-05-10
+        </div>
+    
+
+    <div class="post-md">
+        <p>在本地主机上创建公钥：<code>ssh-keygen</code><br><br>一直回车即可</p>
+<pre><code class="sh">akirayamada@AkiradeMacBook-Air ~ % ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/akirayamada/.ssh/id_rsa): 
+Created directory &#39;/Users/akirayamada/.ssh&#39;.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /Users/akirayamada/.ssh/id_rsa
+Your public key has been saved in /Users/akirayamada/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:tcGMr9Ykwtpe05LGR83AwIgCOOpEeXoZMi/mrpEcgLk akirayamada@AkiradeMacBook-Air.local
+The key&#39;s randomart image is:
++---[RSA 3072]----+
+|o..  . o.        |
+|+*.o. . .*       |
+|*.*.o   . B      |
+|o* + .   o *     |
+|E.o   o S = o    |
+|.+.  o o O       |
+|+.  . . X +      |
+| o   . + +       |
+|o     .          |
++----[SHA256]-----+
+</code></pre>
+<p>把公钥复制到远程主机上:<code>ssh-copy-id</code></p>
+<pre><code class="sh">akirayamada@AkiradeMacBook-Air ~ % ssh-copy-id -i ~/.ssh/id_rsa.pub root@mycent
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: &quot;/Users/akirayamada/.ssh/id_rsa.pub&quot;
+The authenticity of host &#39;mycent (43.138.202.46)&#39; can&#39;t be established.
+ED25519 key fingerprint is SHA256:GQIjCqPOt2KJ5VJpIGln8islVjLLz19iMXtWTCrbI5k.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@mycent&#39;s password: 
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with:   &quot;ssh &#39;root@mycent&#39;&quot;
+and check to make sure that only the key(s) you wanted were added.
+</code></pre>
+
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 青丝</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/sakakimd/css/a11y-dark.min.css">
+
+
+<script src="/sakakimd/js/highlight.min.js"></script>
+
+
+<script src="/sakakimd/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>

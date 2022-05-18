@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/sakakimd/img/favicon.png">
+    <title>青丝 | 青丝半绾慵倚床</title>
+    
+<link rel="stylesheet" href="/sakakimd/css/reset.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/style.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/fonts.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/sakakimd/">青丝</a>
+    <a class="go-home" href="/sakakimd/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+        <div class="post-main-title">
+            CentOS7安装MySQL5.6
+        </div>
+        <div class="post-meta">
+            2022-05-10
+        </div>
+    
+
+    <div class="post-md">
+        <p>查看是否已经安装了mysql,如果安装了就卸载</p>
+<pre><code class="sh">rpm -qa | grep -i mysql
+rpm -e --nodeps 
+</code></pre>
+<p>官网下载安装mysql-server</p>
+<pre><code class="sh">wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+yum install mysql-community-server
+</code></pre>
+<p>安装成功后重启mysql服务</p>
+<pre><code class="sh">service mysqld restart
+</code></pre>
+<p>启动mysql服务</p>
+<pre><code class="sh">mysql -u root -p
+</code></pre>
+<p>设置密码<code>set password for &#39;root&#39;@&#39;主机名&#39; =password(&#39;新密码&#39;);</code></p>
+<pre><code class="sql">set password for &#39;root&#39;@&#39;localhost&#39; =password(&#39;123456&#39;);
+</code></pre>
+<p>配置mysql远程链接<br><br>设置远程访问账号:<code>grant all privileges on . to 远程访问用户名@’%’ identified by ‘用户密码’;</code><br></p>
+<pre><code class="sql">grant all privileges on *.* to root@&#39;%&#39; identified by &#39;123456&#39;;
+flush privileges;
+</code></pre>
+<p>配置mysql,设置utf-8编码</p>
+<pre><code class="sh">vim /etc/my.cnf
+</code></pre>
+<pre><code class="cnf">[mysqld]
+collation-server = utf8_unicode_ci
+init-connect=&#39;SET NAMES utf8&#39;
+character-set-server = utf8
+
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+</code></pre>
+<p>重启mysql服务</p>
+<pre><code class="sh">service mysqld restart
+</code></pre>
+
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 青丝</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/sakakimd/css/a11y-dark.min.css">
+
+
+<script src="/sakakimd/js/highlight.min.js"></script>
+
+
+<script src="/sakakimd/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>
