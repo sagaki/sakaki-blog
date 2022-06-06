@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+    <link rel="alternate icon" type="image/png" href="/sakakimd/img/favicon.png">
+    <title>青丝 | 青丝半绾慵倚床</title>
+    
+<link rel="stylesheet" href="/sakakimd/css/reset.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/style.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/markdown.css">
+
+    
+<link rel="stylesheet" href="/sakakimd/css/fonts.css">
+
+<meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+        <div class="paper">
+            <div class="paper-main">
+                
+                    <div class="post-header">
+    <a class="logo" href="/sakakimd/">青丝</a>
+    <a class="go-home" href="/sakakimd/">
+        <svg width="8" height="14" viewBox="0 0 8 14">
+            <path d="M7 1L1 7l6 6" stroke="#000" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>
+                
+                <div class="post-main">
+
+    
+        <div class="post-main-title">
+            
+        </div>
+        <div class="post-meta">
+            2022-06-06
+        </div>
+    
+
+    <div class="post-md">
+        <h1 id="Centos7-RPM方式安装Oracle19c"><a href="#Centos7-RPM方式安装Oracle19c" class="headerlink" title="Centos7 RPM方式安装Oracle19c"></a>Centos7 RPM方式安装Oracle19c</h1><h2 id="1-下载与安装Oracle依赖包"><a href="#1-下载与安装Oracle依赖包" class="headerlink" title="1. 下载与安装Oracle依赖包"></a>1. 下载与安装Oracle依赖包</h2><h3 id="1-1-下载Oracle-Database-19c-19-3-for-Linux-x86-64-RPM"><a href="#1-1-下载Oracle-Database-19c-19-3-for-Linux-x86-64-RPM" class="headerlink" title="1.1 下载Oracle Database 19c (19.3) for Linux x86-64 (RPM)"></a>1.1 下载Oracle Database 19c (19.3) for Linux x86-64 (RPM)</h3><h4 id="下载Oracle安装包-19c地址"><a href="#下载Oracle安装包-19c地址" class="headerlink" title="下载Oracle安装包 19c地址"></a>下载Oracle安装包 19c地址</h4><pre><code class="shell">https://www.oracle.com/database/technologies/oracle19c-linux-downloads.html
+wget https://download.oracle.com/otn/linux/oracle19c/190000/oracle-database-ee-19c-1.0-1.x86_64.rpm
+</code></pre>
+<h3 id="1-2-下载oracle-database-preinstall-19c-1-0-1-el7-x86-64-rpm"><a href="#1-2-下载oracle-database-preinstall-19c-1-0-1-el7-x86-64-rpm" class="headerlink" title="1.2 下载oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm"></a>1.2 下载oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm</h3><h4 id="1-下载依赖preinstall包地址"><a href="#1-下载依赖preinstall包地址" class="headerlink" title="(1) 下载依赖preinstall包地址"></a>(1) 下载依赖preinstall包地址</h4><pre><code class="shell"> https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/index.html
+</code></pre>
+<h4 id="2-linux命令方式下载"><a href="#2-linux命令方式下载" class="headerlink" title="(2) linux命令方式下载"></a>(2) linux命令方式下载</h4><pre><code>wget https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm
+</code></pre>
+<h3 id="1-3-下载compat-libstdc-33-3-2-3-72-el7-x86-64-rpm"><a href="#1-3-下载compat-libstdc-33-3-2-3-72-el7-x86-64-rpm" class="headerlink" title="1.3 下载compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm"></a>1.3 下载compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm</h3><h4 id="1-下载compat-libstdc-地址"><a href="#1-下载compat-libstdc-地址" class="headerlink" title="(1) 下载compat-libstdc++地址"></a>(1) 下载compat-libstdc++地址</h4><pre><code class="shell">http://www.rpmfind.net/linux/rpm2html/search.php?query=compat-libstdc%2B%2B-33(x86-64)
+</code></pre>
+<h4 id="2-linux命令方式下载-1"><a href="#2-linux命令方式下载-1" class="headerlink" title="(2) linux命令方式下载"></a>(2) linux命令方式下载</h4><pre><code class="shell">wget http://www.rpmfind.net/linux/centos/7.9.2009/os/x86_64/Packages/compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
+</code></pre>
+<h2 id="2-安装Oracle"><a href="#2-安装Oracle" class="headerlink" title="2. 安装Oracle"></a>2. 安装Oracle</h2><h3 id="2-1-通过yum安装依赖"><a href="#2-1-通过yum安装依赖" class="headerlink" title="2.1 通过yum安装依赖"></a>2.1 通过yum安装依赖</h3><pre><code class="shell">yum -y install binutils compat-libcap1 compat-libstdc++-33 compat-libstdc++-33*.i686 elfutils-libelf-devel gcc gcc-c++ glibc*.i686 glibc glibc-devel glibc-devel*.i686 ksh libgcc*.i686 libgcc libstdc++ libstdc++*.i686 libstdc++-devel libstdc++-devel*.i686 libaio libaio*.i686 libaio-devel libaio-devel*.i686 make sysstat unixODBC unixODBC*.i686 unixODBC-devel unixODBC-devel*.i686 libXp		
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/a63d987df1b54fd08236ec75c36d0f56.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAR2VydnVzIGFsYmlyb3N0cmlz,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<h3 id="2-2-安装compat-libstdc"><a href="#2-2-安装compat-libstdc" class="headerlink" title="2.2 安装compat-libstdc++"></a>2.2 安装compat-libstdc++</h3><pre><code class="shell">rpm -ivh compat-libstdc++-33-3.2.3-72.el7.x86_64.rpm
+</code></pre>
+<h3 id="2-3-安装preinstall"><a href="#2-3-安装preinstall" class="headerlink" title="2.3 安装preinstall"></a>2.3 安装preinstall</h3><pre><code class="shell">yum -y localinstall oracle-database-preinstall-19c-1.0-1.el7.x86_64.rpm
+</code></pre>
+<h3 id="2-4-安装Oracle"><a href="#2-4-安装Oracle" class="headerlink" title="2.4 安装Oracle"></a>2.4 安装Oracle</h3><pre><code class="shell">yum install -y oracle-database-ee-19c-1.0-1.x86_64.rpm
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/66f6ee707c114387b4568cb20505abf8.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAR2VydnVzIGFsYmlyb3N0cmlz,size_16,color_FFFFFF,t_70,g_se,x_16"></p>
+<h2 id="3-配置文件"><a href="#3-配置文件" class="headerlink" title="3. 配置文件"></a>3. 配置文件</h2><h3 id="3-1-数据库脚本"><a href="#3-1-数据库脚本" class="headerlink" title="3.1 数据库脚本"></a>3.1 数据库脚本</h3><p><img src="https://img-blog.csdnimg.cn/bfd53781613a4175a06c6b293903cf06.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAR2VydnVzIGFsYmlyb3N0cmlz,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<h3 id="3-2-修改配置文件"><a href="#3-2-修改配置文件" class="headerlink" title="3.2 修改配置文件"></a>3.2 修改配置文件</h3><pre><code class="shell">vim /etc/init.d/oracledb_ORCLCDB-19c configure 
+</code></pre>
+<h4 id="将下图export-CREATE-AS-CDB-x3D-true修改为false"><a href="#将下图export-CREATE-AS-CDB-x3D-true修改为false" class="headerlink" title="将下图export CREATE_AS_CDB&#x3D;true修改为false"></a>将下图export CREATE_AS_CDB&#x3D;true修改为false</h4><p><img src="https://img-blog.csdnimg.cn/8666c810c12747f79f94f0b23783fa98.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAR2VydnVzIGFsYmlyb3N0cmlz,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<pre><code>#修改export CHARSET=AL32UTF8解决乱码
+export CHARSET=ZHS16GBK
+</code></pre>
+<h4 id="配置-x2F-etc-x2F-profile"><a href="#配置-x2F-etc-x2F-profile" class="headerlink" title="配置&#x2F;etc&#x2F;profile"></a>配置&#x2F;etc&#x2F;profile</h4><pre><code class="shell">vim /etc/profile
+</code></pre>
+<pre><code>export ORACLE_HOME=/opt/oracle/product/19c/dbhome_1
+export ORACLE_SID=ORCLCDB
+export PATH=$PATH:$ORACLE_HOME/bin
+</code></pre>
+<h3 id="复制conf文件"><a href="#复制conf文件" class="headerlink" title="复制conf文件"></a>复制conf文件</h3><p>oracledb_ORCLCDB-19c.conf需要和SID一致，默认时，无需cp文件，只有当修改了SID时才需要执行一下操作：</p>
+<pre><code>[root@cet-orcl sysconfig]# cd /etc/sysconfig/
+[root@cet-orcl sysconfig]# ll |grep oracle
+drwxr-xr-x. 2 root root  138 5月  13 22:03 oracle-database-preinstall-19c
+-rw-r--r--. 1 root root  432 4月  18 2019 oracledb_ORCLCDB-19c.conf
+[root@cet-orcl sysconfig]# cp oracledb_ORCLCDB-19c.conf oracledb_orcl-19c.conf 
+</code></pre>
+<h3 id="3-3-执行初始化脚本"><a href="#3-3-执行初始化脚本" class="headerlink" title="3.3 执行初始化脚本"></a>3.3 执行初始化脚本</h3><pre><code class="shell">/etc/init.d/oracledb_ORCLCDB-19c configure
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/9763e38cb9364cf89fbd3ae4fe0a1470.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAR2VydnVzIGFsYmlyb3N0cmlz,size_20,color_FFFFFF,t_70,g_se,x_16"></p>
+<h2 id="4-oracle-数据库初步操作"><a href="#4-oracle-数据库初步操作" class="headerlink" title="4. oracle 数据库初步操作"></a>4. oracle 数据库初步操作</h2><h4 id="4-1-使用oracle账户进入数据库可以免密"><a href="#4-1-使用oracle账户进入数据库可以免密" class="headerlink" title="4.1 使用oracle账户进入数据库可以免密"></a>4.1 使用oracle账户进入数据库可以免密</h4><pre><code class="shell">su oracle
+</code></pre>
+<h4 id="4-2-进入数据库命令"><a href="#4-2-进入数据库命令" class="headerlink" title="4.2 进入数据库命令"></a>4.2 进入数据库命令</h4><pre><code class="shell">sqlplus / as sysdb
+</code></pre>
+<h4 id="4-3-修改数据库system用户密码"><a href="#4-3-修改数据库system用户密码" class="headerlink" title="4.3 修改数据库system用户密码"></a>4.3 修改数据库system用户密码</h4><pre><code class="shell">alter user system identified by 123456;
+</code></pre>
+<h2 id="5-Linux-关闭防火墙"><a href="#5-Linux-关闭防火墙" class="headerlink" title="5. Linux 关闭防火墙"></a>5. Linux 关闭防火墙</h2><pre><code class="shell">systemctl stop firewalld
+systemctl disable firewalld
+</code></pre>
+<blockquote>
+<p>遇到的坑…..</p>
+</blockquote>
+<ul>
+<li>centos7安装oracle系统重启后，如果直接用sqlplus进入数据库，在输入账户密码回车之后，报一下错误：</li>
+</ul>
+<pre><code class="shell">Enter user-name: system
+Enter password: 
+ERROR:
+ORA-01034: ORACLE not available
+ORA-27101: shared memory realm does not exist
+Linux-x86_64 Error: 2: No such file or directory
+Additional information: 4376
+Additional information: 1135834575
+Process ID: 0
+Session ID: 0 Serial number: 0
+</code></pre>
+<ul>
+<li><p>这时，如果使用超用户oracle进入sqlplus  &#x2F; as sysdba</p>
+<pre><code class="shell">su oracle
+sqlplus  / as sysdba
+</code></pre>
+</li>
+<li><p>这时你会发现…进入‘成功’,显示SQL&gt;命令行</p>
+<pre><code class="shell">SQL*Plus: Release 19.0.0.0.0 - Production on Tue Mar 22 17:19:23 2022
+Version 19.3.0.0.0
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+Connected to an idle instance.
+
+SQL&gt; 
+</code></pre>
+</li>
+<li><p>但是当你输入sql命令时，发现报以下错误[明明命令正确却执行不了]</p>
+<pre><code class="shell">SQL&gt; alter user system identified by 123456;
+alter user system identified by 123456
+*
+ERROR at line 1:
+ORA-01034: ORACLE not available
+Process ID: 0
+Session ID: 0 Serial number: 0
+</code></pre>
+</li>
+<li><p>其实这个问题处理起来很简单，只要启动监听就行</p>
+<ol>
+<li><p>首选选进入oracle在初始化时为系统创建的超用户:su oracle</p>
+<pre><code class="shell">su oracle
+</code></pre>
+</li>
+<li><p>输入监听启动命令:</p>
+<pre><code class="shell">lsnrctl  start
+</code></pre>
+</li>
+<li><p>启动成功</p>
+<pre><code class="shell">[oracle@cent root]$ lsnrctl  start
+
+LSNRCTL for Linux: Version 19.0.0.0.0 - Production on 22-MAR-2022 17:26:52
+
+Copyright (c) 1991, 2019, Oracle.  All rights reserved.
+
+Starting /opt/oracle/product/19c/dbhome_1/bin/tnslsnr: please wait...
+
+TNSLSNR for Linux: Version 19.0.0.0.0 - Production
+System parameter file is /opt/oracle/product/19c/dbhome_1/network/admin/listener.ora
+Log messages written to /opt/oracle/diag/tnslsnr/cent/listener/alert/log.xml
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=cent)(PORT=1521)))
+Listening on: (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+
+Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=cent)(PORT=1521)))
+STATUS of the LISTENER
+------------------------
+Alias                     LISTENER
+Version                   TNSLSNR for Linux: Version 19.0.0.0.0 - Production
+Start Date                22-MAR-2022 17:26:54
+Uptime                    0 days 0 hr. 0 min. 0 sec
+Trace Level               off
+Security                  ON: Local OS Authentication
+SNMP                      OFF
+Listener Parameter File   /opt/oracle/product/19c/dbhome_1/network/admin/listener.ora
+Listener Log File         /opt/oracle/diag/tnslsnr/cent/listener/alert/log.xml
+Listening Endpoints Summary...
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)(HOST=cent)(PORT=1521)))
+  (DESCRIPTION=(ADDRESS=(PROTOCOL=ipc)(KEY=EXTPROC1521)))
+The listener supports no services
+The command completed successfully
+</code></pre>
+</li>
+<li><p>使用命令进入sqlplus &#x2F;nolog</p>
+<pre><code class="shell">[oracle@cent root]$ sqlplus /nolog
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Mar 22 18:30:02 2022
+Version 19.3.0.0.0
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+SQL&gt;
+</code></pre>
+</li>
+<li><p>连接sysdba : conn  &#x2F; as sysdba</p>
+<pre><code class="shell">[oracle@cent root]$ sqlplus /nolog
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Tue Mar 22 18:30:02 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+SQL&gt; conn  / as sysdba
+Connected to an idle instance.
+</code></pre>
+</li>
+<li><p>启动sysdba</p>
+<pre><code class="shell">SQL&gt; startup
+ORACLE instance started.
+
+Total System Global Area 1593831936 bytes
+Fixed Size                  8897024 bytes
+Variable Size             922746880 bytes
+Database Buffers          654311424 bytes
+Redo Buffers                7876608 bytes
+</code></pre>
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+</div>
+                <div class="footer">
+    <span>Copyright © 2022 青丝</span>
+    <span>Theme Designed By <a target="_blank" href="https://zheli.design/one-paper">這Li</a></span>
+</div>
+
+
+<link rel="stylesheet" href="/sakakimd/css/a11y-dark.min.css">
+
+
+<script src="/sakakimd/js/highlight.min.js"></script>
+
+
+<script src="/sakakimd/js/highlightjs-line-numbers.js"></script>
+
+
+<script>
+    hljs.initHighlightingOnLoad();
+    hljs.initLineNumbersOnLoad();
+</script>
+
+            </div>
+        </div>
+    </body>
+</html>
