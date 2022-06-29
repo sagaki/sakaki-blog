@@ -1,3 +1,3 @@
-# 青丝
-这是基于Hexo搭建的GitHub Pages，使用的主题是[one-paper](https://github.com/zheli-design/hexo-theme-one-paper)<br>
-[博客](https://sagaki.github.io/sakakimd/)
+# sakaki's blog
+This is GitHub Pages based on Hexo, the theme used is[one-paper](https://github.com/zheli-design/hexo-theme-one-paper)<br>
+[blog](https://sagaki.github.io/sakaki-blog)
